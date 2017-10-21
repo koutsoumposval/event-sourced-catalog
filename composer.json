@@ -1,4 +1,7 @@
 {
+    "name": "koutsoumposval/event-sourced-catalog",
+    "description": "An event sourced Category-Product catalog",
+    "license": "MIT",
     "type": "project",
     "require": {
         "php": "7.1.*",
