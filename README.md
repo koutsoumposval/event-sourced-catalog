@@ -1,5 +1,6 @@
 # Event Sourced Catalog
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b61bab2d81f748879604bef46bbd47f8)](https://www.codacy.com/app/koutsoumposval/event-sourced-catalog?utm_source=github.com&utm_medium=referral&utm_content=koutsoumposval/event-sourced-catalog&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/koutsoumposval/event-sourced-catalog.svg?branch=master)](https://travis-ci.org/koutsoumposval/event-sourced-catalog.svg?branch=master)
 
 An event sourced Category-Product catalog, Proof Of Concept project for the 
