@@ -1,0 +1,25 @@
+language: php
+
+php:
+  - '7.1'
+
+env:
+  - COMPOSER_ALLOW_XDEBUG=0
+
+sudo: false
+
+notifications:
+  email: false
+
+directories:
+  - $HOME/.composer/cache/files
+
+install:
+  - composer install --prefer-dist
+  - composer require codacy/coverage
+
+script:
+  - phpunit --coverage-clover ./reports/clover.xml
+
+after_script:
+  - vendor/bin/codacycoverage clover ./reports/clover.xml
