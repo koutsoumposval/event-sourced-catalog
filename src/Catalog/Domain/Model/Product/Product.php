@@ -132,7 +132,7 @@ final class Product extends AggregateRoot
      */
     private function applyProductWasCreated(ProductWasCreated $event): void
     {
-        $this->id = $event->aggregateId();
+        $this->id = ProductId::fromString($event->aggregateId());
         $this->name = $event->name();
         $this->categories = new ArrayCollection();
     }
@@ -177,5 +177,11 @@ final class Product extends AggregateRoot
         return $this->categories;
     }
 
-
+    /**
+     * @return ProductId
+     */
+    public function getId(): ProductId
+    {
+        return $this->id;
+    }
 }
