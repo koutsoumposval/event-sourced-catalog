@@ -1,8 +1,14 @@
 <?php
 namespace EventSourcedCatalog\Domain\Catalog\Product;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use EventSourcedCatalog\Domain\Catalog\Category\Category;
+use EventSourcedCatalog\Domain\Catalog\Category\CategoryId;
+use EventSourcedCatalog\Domain\Catalog\Product\Event\CategoryWasAdded;
+use EventSourcedCatalog\Domain\Catalog\Product\Event\CategoryWasRemoved;
 use EventSourcedCatalog\Domain\Catalog\Product\Event\ProductWasCreated;
 use EventSourcedCatalog\Domain\Catalog\Product\Event\ProductWasRenamed;
+use EventSourcedCatalog\Domain\Catalog\Exception\ProductException;
 use EventSourcedCatalog\Domain\Catalog\Product\ValueObject\Name;
 use Prooph\EventSourcing\AggregateChanged;
 use Prooph\EventSourcing\AggregateRoot;
@@ -23,6 +29,11 @@ final class Product extends AggregateRoot
      * @var Name
      */
     private $name;
+
+    /**
+     * @var Category[]|ArrayCollection
+     */
+    private $categories;
 
     /**
      * @param Name $name
@@ -46,15 +57,45 @@ final class Product extends AggregateRoot
 
     /**
      * @param Name $name
+     * @throws ProductException
      */
     public function rename(Name $name): void
     {
-        if ($name !== $this->name) {
-            $this->recordThat(ProductWasRenamed::occur(
-                (string)$this->id,
-                ['name' => $name]
-            ));
+        if ($name->getName() === $this->name->getName()) {
+            throw ProductException::provideDifferentName();
         }
+        $this->recordThat(ProductWasRenamed::occur(
+            (string)$this->id,
+            ['name' => $name]
+        ));
+    }
+
+    /**
+     * @param Category $category
+     */
+    public function addCategory(Category $category): void
+    {
+        if ($this->categories->contains($category)) {
+            throw ProductException::categoryAlreadyAdded();
+        }
+        $this->recordThat(CategoryWasAdded::occur(
+            (string)$this->id,
+            ['category' => $category]
+        ));
+    }
+
+    /**
+     * @param Category $category
+     */
+    public function removeCategory(Category $category): void
+    {
+        if (! $this->categories->contains($category)) {
+            throw ProductException::notAddedCategory();
+        }
+        $this->recordThat(CategoryWasRemoved::occur(
+            (string)$this->id,
+            ['category' => $category]
+        ));
     }
 
     /**
@@ -64,7 +105,6 @@ final class Product extends AggregateRoot
     {
         return (string)$this->id;
     }
-
 
     /**
      * @param AggregateChanged $event
@@ -78,6 +118,12 @@ final class Product extends AggregateRoot
             case ProductWasRenamed::class:
                 $this->applyProductWasRenamed($event);
                 break;
+            case CategoryWasAdded::class:
+                $this->applyCategoryWasAdded($event);
+                break;
+            case CategoryWasRemoved::class:
+                $this->applyCategoryWasRemoved($event);
+                break;
         }
     }
 
@@ -88,6 +134,7 @@ final class Product extends AggregateRoot
     {
         $this->id = $event->aggregateId();
         $this->name = $event->name();
+        $this->categories = new ArrayCollection();
     }
 
     /**
@@ -99,10 +146,36 @@ final class Product extends AggregateRoot
     }
 
     /**
+     * @param CategoryWasAdded $event
+     */
+    private function applyCategoryWasAdded(CategoryWasAdded $event): void
+    {
+        $this->categories->add($event->category());
+    }
+
+    /**
+     * @param CategoryWasRemoved $event
+     */
+    private function applyCategoryWasRemoved(CategoryWasRemoved $event): void
+    {
+        $this->categories->removeElement($event->category());
+    }
+
+    /**
      * @return Name
      */
     public function getName(): Name
     {
         return $this->name;
     }
+
+    /**
+     * @return Category[]|ArrayCollection
+     */
+    public function getCategories(): ArrayCollection
+    {
+        return $this->categories;
+    }
+
+
 }
