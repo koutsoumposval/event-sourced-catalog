@@ -10,19 +10,9 @@ Library.
 
 [Proof][2] provides CQRS and EventSourcing Infrastructure for PHP
 
-Known Problems
+TODO
 ----------------
-There is a known problem in `prooph/common` dependency.
-Failing tests caused by a wrong Assertion:
-```
-# MessageDataAssertion.php Line 71
-Assertion::nullOrscalar($payload, 'payload must only contain arrays and scalar values');
-# Failing when payload are Value Objects
-
-# Change with
-Assertion::nullOrNotEmpty($payload, 'payload must be null or not Empty');
-```
-A Pull Request (rejected) has been made [here][3]
+Implement toArray() and fromArray(0) or serialize Value Objects
 
 Bounded Contexts
 ----------------
@@ -39,4 +29,3 @@ Tests (`phpunit`) can be found in `tests` directory.
 
 [1]: https://github.com/prooph/event-sourcing
 [2]: https://github.com/prooph
-[3]: https://github.com/prooph/common/pull/64
