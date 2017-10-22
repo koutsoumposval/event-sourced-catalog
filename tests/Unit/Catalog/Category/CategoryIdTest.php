@@ -1,7 +1,7 @@
 <?php
 namespace EventSourcedCatalog\Testing\Unit\Catalog\Category;
 
-use EventSourcedCatalog\Catalog\Category\CategoryId;
+use EventSourcedCatalog\Domain\Catalog\Category\CategoryId;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 

@@ -1,9 +1,9 @@
 <?php
 namespace EventSourcedCatalog\Testing\Functional\Catalog\Category\Event;
 
-use EventSourcedCatalog\Catalog\Category\Category;
-use EventSourcedCatalog\Catalog\Category\Event\CategoryWasRenamed;
-use EventSourcedCatalog\Catalog\Category\ValueObject\Name;
+use EventSourcedCatalog\Domain\Catalog\Category\Category;
+use EventSourcedCatalog\Domain\Catalog\Category\Event\CategoryWasRenamed;
+use EventSourcedCatalog\Domain\Catalog\Category\ValueObject\Name;
 use EventSourcedCatalog\Testing\Scenarios\Scenario;
 
 class CategoryWasRenamedTest extends Scenario

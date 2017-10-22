@@ -1,9 +1,9 @@
 <?php
-namespace EventSourcedCatalog\Catalog\Category;
+namespace EventSourcedCatalog\Domain\Catalog\Category;
 
 /**
  * Interface CategoryRepository
- * @package EventSourcedCatalog\Catalog\Category
+ * @package EventSourcedCatalog\Domain\Catalog\Category
  */
 interface CategoryRepository
 {

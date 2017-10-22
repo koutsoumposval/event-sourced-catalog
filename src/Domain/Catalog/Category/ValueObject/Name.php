@@ -1,12 +1,12 @@
 <?php
-namespace EventSourcedCatalog\Catalog\Category\ValueObject;
+namespace EventSourcedCatalog\Domain\Catalog\Category\ValueObject;
 
 use Assert\Assertion;
 use Assert\InvalidArgumentException;
 
 /**
  * Class Name
- * @package EventSourcedCatalog\Catalog\Category\ValueObject
+ * @package EventSourcedCatalog\Domain\Catalog\Category\ValueObject
  * @author Chrysovalantis Koutsoumpos <chrysovalantis.koutsoumpos@devmob.com>
  */
 class Name

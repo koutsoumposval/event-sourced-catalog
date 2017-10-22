@@ -2,7 +2,7 @@
 namespace EventSourcedCatalog\Testing\Unit\Catalog\Category\ValueObject;
 
 use Assert\InvalidArgumentException;
-use EventSourcedCatalog\Catalog\Category\ValueObject\Name;
+use EventSourcedCatalog\Domain\Catalog\Category\ValueObject\Name;
 use PHPUnit\Framework\TestCase;
 
 class NameTest extends TestCase

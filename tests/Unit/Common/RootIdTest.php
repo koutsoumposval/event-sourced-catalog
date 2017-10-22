@@ -1,7 +1,7 @@
 <?php
 namespace EventSourcedCatalog\Testing\Unit\Common;
 
-use EventSourcedCatalog\Common\RootId;
+use EventSourcedCatalog\Domain\Common\RootId;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;

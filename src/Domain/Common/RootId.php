@@ -1,5 +1,5 @@
 <?php
-namespace EventSourcedCatalog\Common;
+namespace EventSourcedCatalog\Domain\Common;
 
 use InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
@@ -7,7 +7,7 @@ use Ramsey\Uuid\UuidInterface;
 
 /**
  * Class RootId
- * @package EventSourcedCatalog\Common
+ * @package EventSourcedCatalog\Domain\Common
  * @author Chrysovalantis Koutsoumpos <chrysovalantis.koutsoumpos@devmob.com>
  */
 class RootId

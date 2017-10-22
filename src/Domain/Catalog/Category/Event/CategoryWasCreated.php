@@ -1,14 +1,14 @@
 <?php
-namespace EventSourcedCatalog\Catalog\Category\Event;
+namespace EventSourcedCatalog\Domain\Catalog\Category\Event;
 
-use EventSourcedCatalog\Common\RootId;
-use EventSourcedCatalog\Catalog\Category\CategoryId;
-use EventSourcedCatalog\Catalog\Category\ValueObject\Name;
+use EventSourcedCatalog\Domain\Common\RootId;
+use EventSourcedCatalog\Domain\Catalog\Category\CategoryId;
+use EventSourcedCatalog\Domain\Catalog\Category\ValueObject\Name;
 use Prooph\EventSourcing\AggregateChanged;
 
 /**
  * Class CategoryWasCreated
- * @package EventSourcedCatalog\Catalog\Category\Events
+ * @package EventSourcedCatalog\Domain\Catalog\Category\Events
  * @author Chrysovalantis Koutsoumpos <chrysovalantis.koutsoumpos@devmob.com>
  */
 class CategoryWasCreated extends AggregateChanged

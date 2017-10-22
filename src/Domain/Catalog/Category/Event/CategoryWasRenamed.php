@@ -1,7 +1,7 @@
 <?php
-namespace EventSourcedCatalog\Catalog\Category\Event;
+namespace EventSourcedCatalog\Domain\Catalog\Category\Event;
 
-use EventSourcedCatalog\Catalog\Category\ValueObject\Name;
+use EventSourcedCatalog\Domain\Catalog\Category\ValueObject\Name;
 use Prooph\EventSourcing\AggregateChanged;
 
 class CategoryWasRenamed extends AggregateChanged

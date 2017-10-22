@@ -1,8 +1,8 @@
 <?php
 namespace EventSourcedCatalog\Testing\Unit\Catalog\Category;
 
-use EventSourcedCatalog\Catalog\Category\Category;
-use EventSourcedCatalog\Catalog\Category\ValueObject\Name;
+use EventSourcedCatalog\Domain\Catalog\Category\Category;
+use EventSourcedCatalog\Domain\Catalog\Category\ValueObject\Name;
 use PHPUnit\Framework\TestCase;
 
 class CategoryTest extends TestCase

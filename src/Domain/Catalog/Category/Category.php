@@ -1,15 +1,15 @@
 <?php
-namespace EventSourcedCatalog\Catalog\Category;
+namespace EventSourcedCatalog\Domain\Catalog\Category;
 
-use EventSourcedCatalog\Catalog\Category\Event\CategoryWasCreated;
-use EventSourcedCatalog\Catalog\Category\Event\CategoryWasRenamed;
-use EventSourcedCatalog\Catalog\Category\ValueObject\Name;
+use EventSourcedCatalog\Domain\Catalog\Category\Event\CategoryWasCreated;
+use EventSourcedCatalog\Domain\Catalog\Category\Event\CategoryWasRenamed;
+use EventSourcedCatalog\Domain\Catalog\Category\ValueObject\Name;
 use Prooph\EventSourcing\AggregateChanged;
 use Prooph\EventSourcing\AggregateRoot;
 
 /**
  * Class Category
- * @package EventSourcedCatalog\Catalog\Category
+ * @package EventSourcedCatalog\Domain\Catalog\Category
  * @author Chrysovalantis Koutsoumpos <chrysovalantis.koutsoumpos@devmob.com>
  */
 final class Category extends AggregateRoot
