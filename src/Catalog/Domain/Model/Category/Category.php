@@ -16,7 +16,7 @@ use Prooph\EventSourcing\AggregateRoot;
 final class Category extends AggregateRoot
 {
     /**
-     * @var null|CategoryId
+     * @var CategoryId
      */
     private $id;
 
@@ -91,7 +91,7 @@ final class Category extends AggregateRoot
      */
     private function applyCategoryWasCreated(CategoryWasCreated $event): void
     {
-        $this->id = $event->aggregateId();
+        $this->id = CategoryId::fromString($event->aggregateId());
         $this->name = $event->name();
     }
 
@@ -109,5 +109,13 @@ final class Category extends AggregateRoot
     public function getName(): Name
     {
         return $this->name;
+    }
+
+    /**
+     * @return CategoryId
+     */
+    public function getId(): CategoryId
+    {
+        return $this->id;
     }
 }
