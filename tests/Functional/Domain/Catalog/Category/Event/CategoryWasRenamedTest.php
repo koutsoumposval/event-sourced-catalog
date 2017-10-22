@@ -11,7 +11,7 @@ class CategoryWasRenamedTest extends Scenario
     /**
      * @test
      */
-    public function category_was_updated_scenario(): void
+    public function category_was_renamed_scenario(): void
     {
         $name = new Name('Category name');
         $category = Category::create($name);
