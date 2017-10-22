@@ -1,8 +1,6 @@
 <?php
 namespace EventSourcedCatalog\Common\Domain;
 
-use InvalidArgumentException;
-use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 /**
@@ -10,7 +8,7 @@ use Ramsey\Uuid\UuidInterface;
  * @package EventSourcedCatalog\Common
  * @author Chrysovalantis Koutsoumpos <chrysovalantis.koutsoumpos@devmob.com>
  */
-class RootId
+abstract class RootId implements \JsonSerializable
 {
     /**
      * @var UuidInterface
@@ -21,31 +19,21 @@ class RootId
      * Prevent directly instantiating the id
      * @param UuidInterface $uuid
      */
-    private function __construct(UuidInterface $uuid)
+    protected function __construct(UuidInterface $uuid)
     {
         $this->id = $uuid;
     }
 
     /**
-     * @return RootId
+     * @return mixed
      */
-    public static function new(): self
-    {
-        return new self(Uuid::uuid1());
-    }
+    abstract public static function new();
 
     /**
      * @param string $uuidString
-     * @return RootId
+     * @return mixed
      */
-    public static function fromString(string $uuidString): self
-    {
-        if (! Uuid::isValid($uuidString)) {
-            throw new InvalidArgumentException("Given id is not a UUID, got '$uuidString'");
-        }
-
-        return new self(Uuid::fromString($uuidString));
-    }
+    abstract public static function fromString(string $uuidString);
 
     /**
      * @return string
@@ -61,5 +49,13 @@ class RootId
     public function __toString(): string
     {
         return $this->toString();
+    }
+
+    /**
+     * @return string
+     */
+    public function jsonSerialize(): string
+    {
+        return $this->__toString();
     }
 }

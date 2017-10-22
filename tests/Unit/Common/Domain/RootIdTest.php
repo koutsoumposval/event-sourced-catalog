@@ -1,7 +1,7 @@
 <?php
 namespace EventSourcedCatalog\Testing\Unit\Common\Domain;
 
-use EventSourcedCatalog\Common\Domain\RootId;
+use EventSourcedCatalog\Testing\Dummy\Common\Domain\TestRootId;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
@@ -13,8 +13,9 @@ class RootIdTest extends TestCase
      */
     public function it_initializes_uuid(): void
     {
-        $rootId = RootId::new();
+        $rootId = TestRootId::new();
         $this->assertTrue(Uuid::isValid((string) $rootId));
+        $this->assertInstanceOf(TestRootId::class, $rootId);
     }
 
     /**
@@ -23,7 +24,7 @@ class RootIdTest extends TestCase
     public function it_initializes_from_string(): void
     {
         $uuidString = (string) Uuid::uuid1();
-        $rootId = RootId::fromString($uuidString);
+        $rootId = TestRootId::fromString($uuidString);
         $this->assertEquals((string) $rootId, $uuidString);
     }
 
@@ -35,7 +36,7 @@ class RootIdTest extends TestCase
     public function it_throws_exceptions_when_trying_to_initialize_with_invalid_string(string $input): void
     {
         $this->expectException(InvalidArgumentException::class);
-        RootId::fromString($input);
+        TestRootId::fromString($input);
     }
 
     /**
