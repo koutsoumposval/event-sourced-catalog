@@ -9,7 +9,7 @@ use Assert\InvalidArgumentException;
  * @package EventSourcedCatalog\Catalog\Domain\Model\Category\ValueObject
  * @author Chrysovalantis Koutsoumpos <chrysovalantis.koutsoumpos@devmob.com>
  */
-class Name
+class Name implements \JsonSerializable
 {
     /**
      * @var string
@@ -33,5 +33,13 @@ class Name
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function jsonSerialize(): string
+    {
+        return $this->__toString();
     }
 }

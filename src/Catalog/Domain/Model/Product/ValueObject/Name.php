@@ -3,7 +3,7 @@ namespace EventSourcedCatalog\Catalog\Domain\Model\Product\ValueObject;
 
 use Assert\Assertion;
 
-class Name
+class Name implements \JsonSerializable
 {
     /**
      * @var string
@@ -29,4 +29,11 @@ class Name
         return $this->name;
     }
 
+    /**
+     * @return string
+     */
+    public function jsonSerialize(): string
+    {
+        return $this->__toString();
+    }
 }
