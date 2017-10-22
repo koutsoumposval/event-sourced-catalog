@@ -1,5 +1,5 @@
 <?php
-namespace EventSourcedCatalog\Testing\Unit\Catalog\Category;
+namespace EventSourcedCatalog\Testing\Unit\Domain\Catalog\Category;
 
 use EventSourcedCatalog\Domain\Catalog\Category\Category;
 use EventSourcedCatalog\Domain\Catalog\Category\ValueObject\Name;

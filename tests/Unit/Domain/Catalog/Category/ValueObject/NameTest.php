@@ -1,5 +1,5 @@
 <?php
-namespace EventSourcedCatalog\Testing\Unit\Catalog\Category\ValueObject;
+namespace EventSourcedCatalog\Testing\Unit\Domain\Catalog\Category\ValueObject;
 
 use Assert\InvalidArgumentException;
 use EventSourcedCatalog\Domain\Catalog\Category\ValueObject\Name;

@@ -1,5 +1,5 @@
 <?php
-namespace EventSourcedCatalog\Testing\Functional\Catalog\Category\Event;
+namespace EventSourcedCatalog\Testing\Functional\Domain\Catalog\Category\Event;
 
 use EventSourcedCatalog\Domain\Catalog\Category\Category;
 use EventSourcedCatalog\Domain\Catalog\Category\Event\CategoryWasRenamed;
