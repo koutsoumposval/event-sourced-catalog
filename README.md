@@ -10,10 +10,6 @@ Library.
 
 [Proof][2] provides CQRS and EventSourcing Infrastructure for PHP
 
-TODO
-----------------
-Implement toArray() and fromArray(0) or serialize Value Objects
-
 Bounded Contexts
 ----------------
 There is one `Catalog` bounded context.
