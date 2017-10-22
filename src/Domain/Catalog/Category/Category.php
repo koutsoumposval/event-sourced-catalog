@@ -4,6 +4,7 @@ namespace EventSourcedCatalog\Domain\Catalog\Category;
 use EventSourcedCatalog\Domain\Catalog\Category\Event\CategoryWasCreated;
 use EventSourcedCatalog\Domain\Catalog\Category\Event\CategoryWasRenamed;
 use EventSourcedCatalog\Domain\Catalog\Category\ValueObject\Name;
+use EventSourcedCatalog\Domain\Catalog\Exception\CategoryException;
 use Prooph\EventSourcing\AggregateChanged;
 use Prooph\EventSourcing\AggregateRoot;
 
@@ -46,15 +47,18 @@ final class Category extends AggregateRoot
 
     /**
      * @param Name $name
+     * @throws CategoryException
      */
     public function rename(Name $name): void
     {
-        if ($name !== $this->name) {
-            $this->recordThat(CategoryWasRenamed::occur(
-                (string)$this->id,
-                ['name' => $name]
-            ));
+        if ($name->getName() === $this->name->getName()) {
+            throw CategoryException::provideDifferentName();
         }
+
+        $this->recordThat(CategoryWasRenamed::occur(
+            (string)$this->id,
+            ['name' => $name]
+        ));
     }
 
     /**
