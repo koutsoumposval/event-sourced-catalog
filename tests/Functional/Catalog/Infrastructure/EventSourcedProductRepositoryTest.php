@@ -31,8 +31,6 @@ class EventSourcedProductRepositoryTest extends TestCase
      */
     public function it_saves_a_product()
     {
-        $this->markTestSkipped('Known bug in prooph/common dependency');
-
         $productRepository = new EventSourcedProductRepository($this->eventStore);
         $productName = new Name('ProductName');
         $productId = ProductId::new();
