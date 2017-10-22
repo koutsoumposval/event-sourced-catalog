@@ -1,5 +1,5 @@
 <?php
-namespace EventSourcedCatalog\Testing\Unit\Common;
+namespace EventSourcedCatalog\Testing\Unit\Common\Domain;
 
 use EventSourcedCatalog\Domain\Common\RootId;
 use InvalidArgumentException;

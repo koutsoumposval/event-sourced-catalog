@@ -7,7 +7,7 @@ use Ramsey\Uuid\UuidInterface;
 
 /**
  * Class RootId
- * @package EventSourcedCatalog\Domain\Common
+ * @package EventSourcedCatalog\Common
  * @author Chrysovalantis Koutsoumpos <chrysovalantis.koutsoumpos@devmob.com>
  */
 class RootId
