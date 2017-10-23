@@ -1,11 +1,10 @@
 <?php
 namespace EventSourcedCatalog\Testing\Functional\Catalog\Domain\Model\Product\Event;
 
-use EventSourcedCatalog\Catalog\Domain\Model\Category\Category;
+use EventSourcedCatalog\Catalog\Domain\Model\Category\CategoryId;
 use EventSourcedCatalog\Catalog\Domain\Model\Product\Event\CategoryWasRemoved;
 use EventSourcedCatalog\Catalog\Domain\Model\Product\Product;
 use EventSourcedCatalog\Catalog\Domain\Model\Product\ValueObject\Name;
-use EventSourcedCatalog\Catalog\Domain\Model\Category\ValueObject\Name as CategoryName;
 use EventSourcedCatalog\Testing\Scenarios\Scenario;
 
 class CategoryWasRemovedTest extends Scenario
@@ -17,10 +16,9 @@ class CategoryWasRemovedTest extends Scenario
     {
         $name = new Name('Product name');
         $product = Product::create($name);
-        $categoryName = new CategoryName('Category Name');
-        $category = Category::create($categoryName);
-        $product->addCategory($category);
-        $product->removeCategory($category);
+        $categoryId = CategoryId::new();
+        $product->addCategory($categoryId);
+        $product->removeCategory($categoryId);
         $events = $this->popRecordedEvents($product);
 
         $this->assertCount(3, $events);

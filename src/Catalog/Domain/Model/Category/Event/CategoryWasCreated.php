@@ -26,6 +26,6 @@ class CategoryWasCreated extends AggregateChanged
      */
     public function name(): Name
     {
-        return $this->payload['name'];
+        return new Name((string)$this->payload['name']);
     }
 }

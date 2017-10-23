@@ -1,7 +1,7 @@
 <?php
 namespace EventSourcedCatalog\Catalog\Domain\Model\Product\Event;
 
-use EventSourcedCatalog\Catalog\Domain\Model\Category\Category;
+use EventSourcedCatalog\Catalog\Domain\Model\Category\CategoryId;
 use Prooph\EventSourcing\AggregateChanged;
 
 /**
@@ -12,10 +12,10 @@ use Prooph\EventSourcing\AggregateChanged;
 class CategoryWasRemoved extends AggregateChanged
 {
     /**
-     * @return Category
+     * @return CategoryId
      */
-    public function category(): Category
+    public function category(): CategoryId
     {
-        return $this->payload['category'];
+        return CategoryId::fromString($this->payload['category']);
     }
 }
