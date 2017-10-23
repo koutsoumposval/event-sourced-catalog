@@ -1,6 +1,7 @@
 <?php
 namespace EventSourcedCatalog\Testing\Functional\Catalog\Infrastructure;
 
+use EventSourcedCatalog\Catalog\Domain\Model\Category\CategoryId;
 use EventSourcedCatalog\Catalog\Domain\Model\Product\Product;
 use EventSourcedCatalog\Catalog\Domain\Model\Product\ProductId;
 use EventSourcedCatalog\Catalog\Domain\Model\Product\ValueObject\Name;
@@ -31,12 +32,14 @@ class EventSourcedProductRepositoryTest extends TestCase
      */
     public function it_saves_a_product()
     {
-        $this->markTestSkipped('Known problem in prooph/common dependency');
-
         $productRepository = new EventSourcedProductRepository($this->eventStore);
         $productName = new Name('ProductName');
         $productId = ProductId::new();
         $product = Product::create($productName, $productId);
+
+        $category = CategoryId::new();
+        $product->addCategory($category);
+
         $productRepository->save($product);
         $result = $productRepository->get($productId);
 
