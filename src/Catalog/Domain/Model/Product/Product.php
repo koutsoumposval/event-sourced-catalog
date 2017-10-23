@@ -12,6 +12,7 @@ use EventSourcedCatalog\Catalog\Domain\Exception\ProductException;
 use EventSourcedCatalog\Catalog\Domain\Model\Product\ValueObject\Name;
 use Prooph\EventSourcing\AggregateChanged;
 use Prooph\EventSourcing\AggregateRoot;
+use Prooph\EventStore\Exception\RuntimeException;
 
 /**
  * Class Product
@@ -31,7 +32,7 @@ final class Product extends AggregateRoot
     private $name;
 
     /**
-     * @var Category[]|ArrayCollection
+     * @var CategoryId[]|ArrayCollection
      */
     private $categories;
 
@@ -49,7 +50,7 @@ final class Product extends AggregateRoot
         $self = new self();
         $self->recordThat(ProductWasCreated::occur(
             (string)$productId,
-            ['name' => $name]
+            ['name' => $name->__toString()]
         )
         );
         return $self;
@@ -66,36 +67,64 @@ final class Product extends AggregateRoot
         }
         $this->recordThat(ProductWasRenamed::occur(
             (string)$this->id,
-            ['name' => $name]
+            ['name' => $name->__toString()]
         ));
     }
 
     /**
-     * @param Category $category
+     * @param CategoryId $categoryId
      */
-    public function addCategory(Category $category): void
+    public function addCategory(CategoryId $categoryId): void
     {
-        if ($this->categories->contains($category)) {
+        if ($this->categoryExists($categoryId)) {
             throw ProductException::categoryAlreadyAdded();
         }
         $this->recordThat(CategoryWasAdded::occur(
             (string)$this->id,
-            ['category' => $category]
+            ['category' => (string)$categoryId]
         ));
     }
 
     /**
-     * @param Category $category
+     * @param CategoryId $categoryId
      */
-    public function removeCategory(Category $category): void
+    public function removeCategory(CategoryId $categoryId): void
     {
-        if (! $this->categories->contains($category)) {
+        if (! $this->categoryExists($categoryId)) {
             throw ProductException::notAddedCategory();
         }
         $this->recordThat(CategoryWasRemoved::occur(
             (string)$this->id,
-            ['category' => $category]
+            ['category' => (string)$categoryId]
         ));
+    }
+
+    /**
+     * @param CategoryId $categoryId
+     * @return bool
+     */
+    private function categoryExists(CategoryId $categoryId): bool
+    {
+        return $this->categories->exists(function ($key, $element) use ($categoryId) {
+            return (string)$element === (string)$categoryId;
+        });
+    }
+
+
+    /**
+     * @param CategoryId $categoryId
+     * @return mixed
+     * @throws ProductException
+     */
+    private function categoryKey(CategoryId $categoryId)
+    {
+        foreach ($this->categories as $key => $category) {
+            if ((string)$category === (string)$categoryId) {
+                return $key;
+            }
+        }
+
+        throw ProductException::notAddedCategory();
     }
 
     /**
@@ -158,7 +187,9 @@ final class Product extends AggregateRoot
      */
     private function applyCategoryWasRemoved(CategoryWasRemoved $event): void
     {
-        $this->categories->removeElement($event->category());
+        $this->categories->remove(
+            $this->categoryKey($event->category())
+        );
     }
 
     /**

@@ -18,7 +18,7 @@ class CategoryTest extends TestCase
 
         $category = Category::create($name);
         $this->assertInstanceOf(Category::class, $category);
-        $this->assertSame($name, $category->getName());
+        $this->assertEquals($name->getName(), $category->getName()->getName());
 
         return $category;
     }
@@ -33,7 +33,7 @@ class CategoryTest extends TestCase
         $newName = new Name('New Category Name');
 
         $category->rename($newName);
-        $this->assertSame($newName, $category->getName());
+        $this->assertEquals($newName->getName(), $category->getName()->getName());
     }
 
     /**

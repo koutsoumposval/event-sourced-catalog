@@ -5,6 +5,7 @@ use EventSourcedCatalog\Catalog\Domain\Model\Category\Event\CategoryWasCreated;
 use EventSourcedCatalog\Catalog\Domain\Model\Category\Event\CategoryWasRenamed;
 use EventSourcedCatalog\Catalog\Domain\Model\Category\ValueObject\Name;
 use EventSourcedCatalog\Catalog\Domain\Exception\CategoryException;
+use JsonSerializable;
 use Prooph\EventSourcing\AggregateChanged;
 use Prooph\EventSourcing\AggregateRoot;
 
@@ -13,7 +14,7 @@ use Prooph\EventSourcing\AggregateRoot;
  * @package EventSourcedCatalog\Catalog\Domain\Model\Category
  * @author Chrysovalantis Koutsoumpos <chrysovalantis.koutsoumpos@devmob.com>
  */
-final class Category extends AggregateRoot
+final class Category extends AggregateRoot implements JsonSerializable
 {
     /**
      * @var CategoryId
@@ -21,7 +22,7 @@ final class Category extends AggregateRoot
     private $id;
 
     /**
-     * @var Name
+     * @var string
      */
     private $name;
 
@@ -39,7 +40,7 @@ final class Category extends AggregateRoot
         $self = new self();
         $self->recordThat(CategoryWasCreated::occur(
             (string)$categoryId,
-            ['name' => $name]
+            ['name' => $name->__toString()]
         )
         );
         return $self;
@@ -57,7 +58,7 @@ final class Category extends AggregateRoot
 
         $this->recordThat(CategoryWasRenamed::occur(
             (string)$this->id,
-            ['name' => $name]
+            ['name' => $name->__toString()]
         ));
     }
 
@@ -117,5 +118,13 @@ final class Category extends AggregateRoot
     public function getId(): CategoryId
     {
         return $this->id;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            "id" => (string)$this->getId(),
+            "name" => $this->getName()->__toString(),
+        ];
     }
 }
