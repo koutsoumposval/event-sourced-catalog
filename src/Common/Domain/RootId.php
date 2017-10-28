@@ -1,6 +1,9 @@
 <?php
 namespace EventSourcedCatalog\Common\Domain;
 
+use InvalidArgumentException;
+use JsonSerializable;
+use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 /**
@@ -8,7 +11,7 @@ use Ramsey\Uuid\UuidInterface;
  * @package EventSourcedCatalog\Common
  * @author Chrysovalantis Koutsoumpos <chrysovalantis.koutsoumpos@devmob.com>
  */
-abstract class RootId implements \JsonSerializable
+abstract class RootId implements JsonSerializable
 {
     /**
      * @var UuidInterface
@@ -25,15 +28,25 @@ abstract class RootId implements \JsonSerializable
     }
 
     /**
-     * @return mixed
+     * @return RootId
      */
-    abstract public static function new();
+    public static function new(): self
+    {
+        return new static(Uuid::uuid4());
+    }
 
     /**
      * @param string $uuidString
-     * @return mixed
+     * @return RootId
      */
-    abstract public static function fromString(string $uuidString);
+    public static function fromString(string $uuidString): self
+    {
+        if (! Uuid::isValid($uuidString)) {
+            throw new InvalidArgumentException("Given id is not a UUID, got '$uuidString'");
+        }
+
+        return new static(Uuid::fromString($uuidString));
+    }
 
     /**
      * @return string
